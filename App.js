@@ -5,11 +5,11 @@ import './App.css';
 const TodoList = () => {
   const [items, setItems] = useState([]);
   const [taskText, setTaskText] = useState('');
-  const [editIndex, setEditIndex] = useState(null); // Track which item is being edited
+  const [editIndex, setEditIndex] = useState(null); 
   const [editText, setEditText] = useState('');
   const [itemsToRemove, setItemsToRemove] = useState([]);
 
-  const API_BASE_URL = 'http://localhost:8000';
+  const API_BASE_URL = 'process.env.REACT_APP_API_URL';
 
   // Fetch current list of tasks
   const fetchItems = async () => {
@@ -28,9 +28,6 @@ const TodoList = () => {
         const newItems = items.filter((_, index) => !itemsToRemove.includes(index));
         setItems(newItems);
         setItemsToRemove([]);
-        
-        // Optionally update backend here if needed
-        // You might want to actually delete the items from your backend
       }
     }, 86400000); // 1 day delay
 
@@ -54,7 +51,7 @@ const TodoList = () => {
     }
   };
 
-  // ✅ Toggle is_done
+  // Toggle is_done
   const toggleDone = async (index) => {
     const item = items[index];
     try {
@@ -80,7 +77,7 @@ const TodoList = () => {
     }
   };
 
-  // 🗑️ Delete a task
+  // 🗑Delete a task
   const deleteItem = async (index) => {
     try {
       await axios.delete(`${API_BASE_URL}/items/${index}`);
@@ -90,13 +87,13 @@ const TodoList = () => {
     }
   };
 
-  // ✏️ Start editing
+  // Start editing
   const startEdit = (index, currentText) => {
     setEditIndex(index);
     setEditText(currentText);
   };
 
-  // ✏️ Save edited task
+  // Save edited task
   const saveEdit = async () => {
     const item = items[editIndex];
     console.log("Saving edit:", {
