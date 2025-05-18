@@ -19,10 +19,6 @@ class Item(BaseModel):
 
 items = []
 
-@app.get("/")
-def root():
-    return {"Hello": "World"}
-
 @app.post("/items")
 def create_item(item: Item):
     items.append(item)
@@ -54,18 +50,3 @@ def update_item(item_id: int, updated_item: Item):
         return items[item_id]
     else:
         raise HTTPException(status_code = 404, detail = f'Item {item_id} not found')
-
-
-# to run
-# uvicorn main:app --reload&
-
-# to add items
-# curl -X POST -H "Content-type: application/json" 'http://127.0.0.1:8000/items?item=apple'
-
-# to add items, but using json
-# curl -X POST -H "Content-type: application/json" 'http://127.0.0.1:8000/items?item=apple'
-
-# to get items
-# curl -X GET http://127.0.0.1:8000/items/0
-
-# http://127.0.0.1:8000/docs#/ leads to a swagger ui page
